@@ -1,6 +1,6 @@
 package com.jaleStore.demo.controller;
 
-import com.jaleStore.demo.model.Employee;
+import com.jaleStore.demo.entity.Employee;
 import com.jaleStore.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

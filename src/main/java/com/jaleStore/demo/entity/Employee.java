@@ -1,8 +1,7 @@
-package com.jaleStore.demo.model;
+package com.jaleStore.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Entity

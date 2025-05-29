@@ -1,13 +1,12 @@
 package com.jaleStore.demo.controller;
 
-import com.jaleStore.demo.DTO.ProductoDTO;
-import com.jaleStore.demo.model.Producto;
-import com.jaleStore.demo.repository.ProductoRespository;
+import com.jaleStore.demo.dto.ProductoDTO;
+import com.jaleStore.demo.entity.Producto;
+import com.jaleStore.demo.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.PublicKey;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +15,7 @@ import java.util.Optional;
 public class ProductoController {
 
     @Autowired
-    private ProductoRespository productoRespository;
+    private ProductoRepository productoRespository;
 
     @GetMapping
     public List<Producto> listarProductos() {
@@ -42,8 +41,8 @@ public class ProductoController {
         if (productodto.getPrecioUnidad() != null) producto.setPrecioUnidad(productodto.getPrecioUnidad());
         if (productodto.getPrecioMayor() != null) producto.setPrecioMayor(productodto.getPrecioMayor());
         if (productodto.getStock() != null) producto.setStock(productodto.getStock());
-        if (productodto.getTalla() != null) producto.setTalla(productodto.getTalla());
-        if (productodto.getColor() != null) producto.setColor(productodto.getColor());
+//        if (productodto.getTalla() != null) producto.setTalla(productodto.getTalla());
+//        if (productodto.getColor() != null) producto.setColor(productodto.getColor());
         return ResponseEntity.ok(productoRespository.save(producto));
     }
 

@@ -24,4 +24,5 @@ public class Carrito {
 
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
+    private Boolean activo;
 }

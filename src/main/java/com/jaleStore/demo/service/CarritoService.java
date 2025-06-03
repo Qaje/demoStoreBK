@@ -1,10 +1,12 @@
 package com.jaleStore.demo.service;
 
+import com.jaleStore.demo.dto.Mapper.CarritoMapper;
 import com.jaleStore.demo.dto.Response.CarritoDTO;
 import com.jaleStore.demo.entity.Carrito;
 import com.jaleStore.demo.entity.ItemCarrito;
 import com.jaleStore.demo.entity.ProductoVariante;
 import com.jaleStore.demo.entity.Usuario;
+import com.jaleStore.demo.exception.StockInsuficienteException;
 import com.jaleStore.demo.repository.CarritoRepository;
 import com.jaleStore.demo.repository.ProductoVarianteRepository;
 import com.jaleStore.demo.util.TipoVenta;
@@ -99,5 +101,19 @@ public class CarritoService {
         carrito.setFechaActualizacion(LocalDateTime.now());
 
         return carrito;
+    }
+
+    // Obtener carrito de un usuario, crear si no existe
+    public Carrito obtenerOCrearCarrito(Long usuarioId) {
+        return carritoRepository.findByUsuarioId(usuarioId)
+                .orElseGet(() -> {
+                    Carrito nuevo = new Carrito();
+                    nuevo.setUsuario(usuarioRepository.findById(usuarioId).orElseThrow());
+                    return carritoRepository.save(nuevo);
+                });
+    }
+
+    public CarritoDTO obtenerCarrito(Long usuarioId) {
+        return obtenerOCrearCarrito(usuarioId);
     }
 }

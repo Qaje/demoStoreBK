@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "detalle_lotes")
 public class DetalleLote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Entity
+@Table(name = "lote_productos")
 public class LoteProducto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

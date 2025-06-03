@@ -2,13 +2,16 @@ package com.jaleStore.demo.service;
 
 import com.jaleStore.demo.dto.CrearLoteDTO;
 import com.jaleStore.demo.dto.CrearProductoDTO;
+import com.jaleStore.demo.dto.Mapper.LoteMapper;
 import com.jaleStore.demo.dto.Mapper.ProductoMapper;
+import com.jaleStore.demo.dto.Mapper.VarianteMapper;
 import com.jaleStore.demo.dto.ProductoDTO;
 import com.jaleStore.demo.dto.Response.ImagenDTO;
 import com.jaleStore.demo.dto.Response.LoteProductoDTO;
 import com.jaleStore.demo.dto.Response.ProductoVarianteDTO;
 import com.jaleStore.demo.dto.VarianteLoteDTO;
 import com.jaleStore.demo.entity.*;
+import com.jaleStore.demo.exception.StockInsuficienteException;
 import com.jaleStore.demo.repository.LoteProductoRepository;
 import com.jaleStore.demo.repository.ProductoRepository;
 import com.jaleStore.demo.repository.ProductoVarianteRepository;
@@ -16,6 +19,7 @@ import com.jaleStore.demo.util.ColorZapatilla;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -24,6 +28,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
@@ -158,10 +163,10 @@ public class ProductoService {
             ImagenVariante imagen = new ImagenVariante();
             imagen.setVariante(variante);
             imagen.setUrl(imagenDto.getUrl());
-            imagen.setAlt(imagenDto.getAlt());
+            imagen.setAlt(imagenDto.getAltText());
             imagen.setOrden(imagenDto.getOrden());
             imagen.setEsPrincipal(imagenDto.getEsPrincipal());
-            imagen.setTipo(imagenDto.getTipo());
+            imagen.setTipo(imagenDto.getTipoImagen());
 
             variante.getImagenes().add(imagen);
         }

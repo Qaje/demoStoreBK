@@ -23,6 +23,8 @@ public class Producto {
     private String marca;           // Ej: "Nike"
     private String descripcion;     // Descripción general del modelo
     private String modelo;          // Ej: "Air Max 270"
+    private String talla;
+    private String color;
 
     @Column(precision = 10, scale = 2)
     private BigDecimal precioUnidad;      // Precio base unitario

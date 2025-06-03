@@ -7,7 +7,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.internal.Function;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,6 +69,11 @@ public class JwtService {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList()));
 
+        // Si es UsuarioDetails personalizado, agregar el ID
+        if (userDetails instanceof UsuarioDetails) {
+            extraClaims.put("userId", ((UsuarioDetails) userDetails).getId());
+        }
+
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
@@ -108,5 +114,11 @@ public class JwtService {
                 Base64.getEncoder().encodeToString(secretKey.getBytes())
         );
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    // Método adicional para extraer el ID del usuario del token
+    public Long extractUserId(String token) {
+        Claims claims = extractAllClaims(token);
+        return claims.get("userId", Long.class);
     }
 }

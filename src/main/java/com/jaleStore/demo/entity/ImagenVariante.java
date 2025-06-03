@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
+@Entity
+@Table(name = "imagen_variantes")
 public class ImagenVariante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

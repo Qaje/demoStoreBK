@@ -1,9 +1,11 @@
 package com.jaleStore.demo.dto.Response;
 
 import com.jaleStore.demo.util.TipoVenta;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
+@Data
 public class ItemCarritoDTO {
     private Long id;
     private ProductoVarianteResumeDTO variante;

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Entity
+@Table(name = "producto_variantes")
 public class ProductoVariante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

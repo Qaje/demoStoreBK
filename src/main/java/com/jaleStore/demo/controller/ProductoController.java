@@ -41,8 +41,8 @@ public class ProductoController {
         if (productodto.getPrecioUnidad() != null) producto.setPrecioUnidad(productodto.getPrecioUnidad());
         if (productodto.getPrecioMayor() != null) producto.setPrecioMayor(productodto.getPrecioMayor());
         if (productodto.getStock() != null) producto.setStock(productodto.getStock());
-//        if (productodto.getTalla() != null) producto.setTalla(productodto.getTalla());
-//        if (productodto.getColor() != null) producto.setColor(productodto.getColor());
+        if (productodto.getTalla() != null) producto.setTalla(productodto.getTalla());
+        if (productodto.getColor() != null) producto.setColor(productodto.getColor());
         return ResponseEntity.ok(productoRespository.save(producto));
     }
 

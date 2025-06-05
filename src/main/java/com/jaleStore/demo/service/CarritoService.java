@@ -9,6 +9,7 @@ import com.jaleStore.demo.entity.Usuario;
 import com.jaleStore.demo.exception.StockInsuficienteException;
 import com.jaleStore.demo.repository.CarritoRepository;
 import com.jaleStore.demo.repository.ProductoVarianteRepository;
+import com.jaleStore.demo.repository.UsuarioRepository;
 import com.jaleStore.demo.util.TipoVenta;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -21,6 +22,9 @@ import java.time.LocalDateTime;
 @Service
 @Transactional
 public class CarritoService {
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private CarritoRepository carritoRepository;
@@ -41,7 +45,7 @@ public class CarritoService {
         }
 
         // Obtener o crear carrito
-        Carrito carrito = carritoRepository.findByUsuarioIdAndActivo(usuarioId, true)
+        Carrito carrito = carritoRepository.findByUsuarioAndActivo(usuarioId, true)
                 .orElse(crearNuevoCarrito(usuarioId));
 
         // Buscar si ya existe esta variante en el carrito
@@ -113,7 +117,7 @@ public class CarritoService {
                 });
     }
 
-    public CarritoDTO obtenerCarrito(Long usuarioId) {
+    public Carrito obtenerCarrito(Long usuarioId) {
         return obtenerOCrearCarrito(usuarioId);
     }
 }

@@ -16,6 +16,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
     Optional<Usuario> findByNombreUsuario(String nombreUsuario);
 
+
     boolean existsByEmail(String email);
 
     boolean existsByNombreUsuario(String nombreUsuario);
@@ -35,4 +36,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
     @Query("SELECT COUNT(u) FROM Usuario u WHERE u.activo = true")
     Long countUsuariosActivos();
+
+    @Query("SELECT u FROM Usuario u WHERE u.activo = :activo")
+    java.util.List<Usuario> findByActivo(@Param("activo") Boolean activo);
 }

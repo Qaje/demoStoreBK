@@ -20,9 +20,10 @@ public class Carrito {
     private Usuario usuario;
 
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ItemCarrito> items = new ArrayList<>();
+    private List<CarritoItem> items = new ArrayList<>();
 
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
     private Boolean activo;
+
 }

@@ -3,7 +3,7 @@ package com.jaleStore.demo.dto.Mapper;
 import com.jaleStore.demo.dto.Response.CarritoDTO;
 import com.jaleStore.demo.dto.Response.ItemCarritoDTO;
 import com.jaleStore.demo.entity.Carrito;
-import com.jaleStore.demo.entity.ItemCarrito;
+import com.jaleStore.demo.entity.CarritoItem;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +35,7 @@ public class CarritoMapper {
         return dto;
     }
 
-    public static ItemCarritoDTO itemToDTO(ItemCarrito item) {
+    public static ItemCarritoDTO itemToDTO(CarritoItem item) {
         if (item == null) {
             return null;
         }

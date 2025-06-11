@@ -1,9 +1,11 @@
 package com.jaleStore.demo.dto.Response;
 
 import com.jaleStore.demo.util.TipoEntrega;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
 public class DatosEntregaDTO {
     private Long id;
     private String nombreCompleto;

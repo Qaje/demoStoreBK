@@ -3,7 +3,7 @@ package com.jaleStore.demo.service;
 import com.jaleStore.demo.dto.Mapper.CarritoMapper;
 import com.jaleStore.demo.dto.Response.CarritoDTO;
 import com.jaleStore.demo.entity.Carrito;
-import com.jaleStore.demo.entity.ItemCarrito;
+import com.jaleStore.demo.entity.CarritoItem;
 import com.jaleStore.demo.entity.ProductoVariante;
 import com.jaleStore.demo.entity.Usuario;
 import com.jaleStore.demo.exception.StockInsuficienteException;
@@ -45,11 +45,11 @@ public class CarritoService {
         }
 
         // Obtener o crear carrito
-        Carrito carrito = carritoRepository.findByUsuarioAndActivo(usuarioId, true)
+        Carrito carrito = carritoRepository.findCarritoActivoByUsuario(usuarioId, true)
                 .orElse(crearNuevoCarrito(usuarioId));
 
         // Buscar si ya existe esta variante en el carrito
-        ItemCarrito itemExistente = carrito.getItems().stream()
+        CarritoItem itemExistente = carrito.getItems().stream()
                 .filter(item -> item.getVariante().getId().equals(varianteId))
                 .findFirst()
                 .orElse(null);
@@ -63,7 +63,7 @@ public class CarritoService {
             itemExistente.setCantidad(nuevaCantidad);
         } else {
             // Crear nuevo item
-            ItemCarrito nuevoItem = new ItemCarrito();
+            CarritoItem nuevoItem = new CarritoItem();
             nuevoItem.setCarrito(carrito);
             nuevoItem.setVariante(variante);
             nuevoItem.setCantidad(cantidad);
@@ -88,7 +88,7 @@ public class CarritoService {
 
     private TipoVenta determinarTipoVenta(Carrito carrito, Integer cantidadNueva) {
         Integer totalItems = carrito.getItems().stream()
-                .mapToInt(ItemCarrito::getCantidad)
+                .mapToInt(CarritoItem::getCantidad)
                 .sum() + cantidadNueva;
 
         // Si el total supera la cantidad mayorista, aplicar precio mayorista

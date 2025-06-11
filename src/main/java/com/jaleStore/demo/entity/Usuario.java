@@ -55,6 +55,9 @@ public class Usuario {
     @Column(name = "rol", nullable = false, length = 20)
     private String rol = "CLIENTE"; // Por defecto es cliente
 
+    @Column(name = "nivel_cliente",nullable = false, length = 20)
+    private String nivelCliente = "NUEVO";
+
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
 

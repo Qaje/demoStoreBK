@@ -29,11 +29,16 @@ public class Pedido {
     @Column(precision = 10, scale = 2)
     private BigDecimal total;
 
+    @Column(precision = 10, scale = 2)
+    private BigDecimal subTotal;
+
     @Enumerated(EnumType.STRING)
     private EstadoPedido estado; // PENDIENTE, PAGADO, ENVIADO, ENTREGADO, CANCELADO
 
     private LocalDateTime fechaPedido;
     private LocalDateTime fechaPago;
+
+    private BigDecimal descuentoMayorista;
 
     // Datos de entrega
     private String direccionEntrega;
@@ -44,4 +49,8 @@ public class Pedido {
     private String codigoQR;
     private String urlPagoQR;
     private String transaccionId;
+
+    public void setDescuentoMayorista(BigDecimal descuentoMayorista) {
+        this.descuentoMayorista = descuentoMayorista;
+    }
 }

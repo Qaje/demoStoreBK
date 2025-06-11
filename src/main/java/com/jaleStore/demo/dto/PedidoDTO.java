@@ -1,5 +1,6 @@
 package com.jaleStore.demo.dto;
 
+import com.jaleStore.demo.entity.Usuario;
 import com.jaleStore.demo.util.EstadoPedido;
 import com.jaleStore.demo.util.TipoVenta;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,7 +15,7 @@ public class PedidoDTO {
         private String numeroPedido;
 
         // Información del usuario (solo datos necesarios)
-        private UsuarioBasicoDTO usuario;
+        private Usuario usuario;
 
         // Fechas importantes
         @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
@@ -35,6 +36,7 @@ public class PedidoDTO {
 
         // Información financiera
         private BigDecimal total;
+        private BigDecimal subTotal;
         private String transaccionId;
 
         // Datos de entrega
@@ -44,6 +46,7 @@ public class PedidoDTO {
 
         // Items del pedido
         private List<ItemPedidoDTO> items;
+        private BigDecimal descuentoMayorista;
 
         // QR de pago (Base64)
         private String qrPago;
@@ -81,11 +84,11 @@ public class PedidoDTO {
             this.numeroPedido = numeroPedido;
         }
 
-        public UsuarioBasicoDTO getUsuario() {
+        public Usuario getUsuario() {
             return usuario;
         }
 
-        public void setUsuario(UsuarioBasicoDTO usuario) {
+        public void setUsuario(Usuario usuario) {
             this.usuario = usuario;
         }
 
@@ -144,6 +147,14 @@ public class PedidoDTO {
         }
 
         public void setTotal(BigDecimal total) {
+            this.total = total;
+        }
+
+        public BigDecimal getSubTotal() {
+            return total;
+        }
+
+        public void setSubTotal(BigDecimal total) {
             this.total = total;
         }
 
@@ -241,4 +252,8 @@ public class PedidoDTO {
                     return estado.toString();
             }
         }
+
+    public void setDescuentoMayorista(BigDecimal descuentoMayorista) {
+            this.descuentoMayorista = descuentoMayorista;
     }
+}

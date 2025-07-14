@@ -8,7 +8,8 @@ import java.math.BigDecimal;
 @Data
 public class ItemCarritoDTO {
     private Long id;
-    private ProductoVarianteResumeDTO variante;
+    private Long productoId;  // En lugar de ProductoVarianteResumeDTO
+    private String nombreProducto;
     private Integer cantidad;
     private BigDecimal precioUnitario;
     private BigDecimal subtotal;

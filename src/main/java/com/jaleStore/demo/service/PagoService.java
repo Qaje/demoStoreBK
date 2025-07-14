@@ -26,8 +26,8 @@ public class PagoService {
     @Value("${app.base-url}")
     private String baseUrl;
 
-    @Value("${mercadopago.access-token}")
-    private String mercadoPagoToken;
+//    @Value("${mercadopago.access-token}")
+//    private String mercadoPagoToken;
 
     /**
      * Genera código QR para pago del pedido
@@ -106,7 +106,7 @@ public class PagoService {
             // return extraerUrlPago(response);
 
             // Por ahora retornamos URL de ejemplo
-            return "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=PREF_ID_EJEMPLO";
+            return "http://localhost:8084/checkout/v1/redirect?pref_id=PREF_ID_EJEMPLO";
 
         } catch (Exception e) {
             throw new RuntimeException("Error al crear pago MercadoPago: " + e.getMessage());

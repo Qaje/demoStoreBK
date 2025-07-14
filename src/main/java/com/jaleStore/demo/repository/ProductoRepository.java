@@ -6,15 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductoRepository extends JpaRepository<Producto, Long> {
     //busca productos activos y disponibles para venta
-    List<Producto> findByAactivoTrue();
+    List<Producto> findByActivoTrue();
 
 //    busca productos activos con paginacion
     Page<Producto> findByActivoTrue(Pageable pageable);
@@ -72,13 +72,13 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     /**
      * Busca productos por rango de precio unitario
      */
-    @Query("SELECT p FROM Producto p WHERE p.activo = true AND p.precioUnitario BETWEEN :precioMin AND :precioMax")
+    @Query("SELECT p FROM Producto p WHERE p.activo = true AND p.precioUnidad BETWEEN :precioMin AND :precioMax")
     List<Producto> findByPrecioUnitarioBetween(@Param("precioMin") BigDecimal precioMin, @Param("precioMax") BigDecimal precioMax);
 
     /**
      * Busca productos por rango de precio mayorista
      */
-    @Query("SELECT p FROM Producto p WHERE p.activo = true AND p.precioMayorista BETWEEN :precioMin AND :precioMax")
+    @Query("SELECT p FROM Producto p WHERE p.activo = true AND p.precioMayor BETWEEN :precioMin AND :precioMax")
     List<Producto> findByPrecioMayoristaBetween(@Param("precioMin") BigDecimal precioMin, @Param("precioMax") BigDecimal precioMax);
 
     // ===== BÚSQUEDAS POR STOCK =====
@@ -106,24 +106,24 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     /**
      * Búsqueda avanzada con múltiples filtros
      */
-    @Query("SELECT p FROM Producto p WHERE p.activo = true " +
-            "AND (:nombre IS NULL OR LOWER(p.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))) " +
-            "AND (:marca IS NULL OR LOWER(p.marca) LIKE LOWER(CONCAT('%', :marca, '%'))) " +
-            "AND (:categoria IS NULL OR LOWER(p.categoria) LIKE LOWER(CONCAT('%', :categoria, '%'))) " +
-            "AND (:talla IS NULL OR p.talla = :talla) " +
-            "AND (:color IS NULL OR LOWER(p.color) LIKE LOWER(CONCAT('%', :color, '%'))) " +
-            "AND (:precioMin IS NULL OR p.precioUnitario >= :precioMin) " +
-            "AND (:precioMax IS NULL OR p.precioUnitario <= :precioMax) " +
-            "AND p.stock > 0")
-    Page<Producto> busquedaAvanzada(
-            @Param("nombre") String nombre,
-            @Param("marca") String marca,
-            @Param("categoria") String categoria,
-            @Param("talla") String talla,
-            @Param("color") String color,
-            @Param("precioMin") BigDecimal precioMin,
-            @Param("precioMax") BigDecimal precioMax,
-            Pageable pageable);
+//    @Query("SELECT p FROM Producto p WHERE p.activo = true " +
+//            "AND (:nombre IS NULL OR LOWER(p.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))) " +
+//            "AND (:marca IS NULL OR LOWER(p.marca) LIKE LOWER(CONCAT('%', :marca, '%'))) " +
+//            "AND (:categoria IS NULL OR LOWER(p.categoria) LIKE LOWER(CONCAT('%', :categoria, '%'))) " +
+//            "AND (:talla IS NULL OR p.talla = :talla) " +
+//            "AND (:color IS NULL OR LOWER(p.color) LIKE LOWER(CONCAT('%', :color, '%'))) " +
+//            "AND (:precioMin IS NULL OR p.precioUnidad >= :precioMin) " +
+//            "AND (:precioMax IS NULL OR p.precioUnidad <= :precioMax) " +
+//            "AND p.stock > 0")
+//    Page<Producto> busquedaAvanzada(
+//            @Param("nombre") String nombre,
+//            @Param("marca") String marca,
+//            @Param("categoria") String categoria,
+//            @Param("talla") String talla,
+//            @Param("color") String color,
+//            @Param("precioMin") BigDecimal precioMin,
+//            @Param("precioMax") BigDecimal precioMax,
+//            Pageable pageable);
 
     // ===== ACTUALIZACIONES DE STOCK =====
 
@@ -202,19 +202,19 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     /**
      * Valor total del inventario
      */
-    @Query("SELECT SUM(p.precioUnitario * p.stock) FROM Producto p WHERE p.activo = true")
+    @Query("SELECT SUM(p.precioUnidad * p.stock) FROM Producto p WHERE p.activo = true")
     BigDecimal calcularValorTotalInventario();
 
     /**
      * Productos más caros
      */
-    @Query("SELECT p FROM Producto p WHERE p.activo = true ORDER BY p.precioUnitario DESC")
+    @Query("SELECT p FROM Producto p WHERE p.activo = true ORDER BY p.precioUnidad DESC")
     List<Producto> findProductosMasCaros(Pageable pageable);
 
     /**
      * Productos más baratos
      */
-    @Query("SELECT p FROM Producto p WHERE p.activo = true ORDER BY p.precioUnitario ASC")
+    @Query("SELECT p FROM Producto p WHERE p.activo = true ORDER BY p.precioUnidad ASC")
     List<Producto> findProductosMasBaratos(Pageable pageable);
 
     // ===== VALIDACIONES =====

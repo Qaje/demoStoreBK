@@ -15,7 +15,7 @@ public class VarianteMapper {
 
         ProductoVarianteDTO dto = new ProductoVarianteDTO();
         dto.setId(variante.getId());
-        dto.setTalla(variante.getTalla());
+        dto.setTalla(Double.valueOf(variante.getTalla()));
         dto.setColor(variante.getColor());
         dto.setNombreColor(variante.getNombreColor());
         dto.setCodigoColor(variante.getCodigoColor());

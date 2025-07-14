@@ -1,15 +1,24 @@
 package com.jaleStore.demo.entity;
 
+import com.jaleStore.demo.util.TipoVenta;
 import jakarta.persistence.*;
+import lombok.Data;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@Data
 @Table(name = "carrito_items")
 public class CarritoItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "carrito_id")
+    private Carrito carrito;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -30,8 +39,17 @@ public class CarritoItem {
     @Column(name = "es_venta_mayorista", nullable = false)
     private Boolean esVentaMayorista = false;
 
+//    @Column(name = "precio_unitario", precision = 10, scale = 2)
+//    private BigDecimal precioUnitario;
+
     @Column(nullable = false)
     private Boolean activo = true;
+
+    @Column(name = "precio_unitario", precision = 10, scale = 2)
+    private BigDecimal precioUnitario;
+
+    @Column(name = "precio_mayor", precision = 10, scale = 2)
+    private BigDecimal precioMayor;
 
     @Column(name = "fecha_agregado")
     private LocalDateTime fechaAgregado;
@@ -91,6 +109,10 @@ public class CarritoItem {
         return cantidad;
     }
 
+    public BigDecimal getPrecioUnitario(){
+        return precioUnitario;
+    }
+
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
@@ -125,5 +147,30 @@ public class CarritoItem {
 
     public void setFechaEliminacion(LocalDateTime fechaEliminacion) {
         this.fechaEliminacion = fechaEliminacion;
+    }
+
+//    public void setCarrito(Carrito carrito) {
+//    }
+//
+//    public void setVariante(ProductoVariante variante) {
+//    }
+//
+//    public void setTipoVenta(TipoVenta tipoVenta) {
+//    }
+//
+    public void setPrecioUnitario(BigDecimal precio) {}
+
+    // Agregar estos métodos faltantes a tu clase CarritoItem:
+
+//    public void setPrecioUnitario(BigDecimal precioUnitario) {
+//        this.precioUnitario = precioUnitario;
+//    }
+
+    public BigDecimal getPrecioMayor() {
+        return precioMayor;
+    }
+
+    public void setPrecioMayor(BigDecimal precioMayor) {
+        this.precioMayor = precioMayor;
     }
 }

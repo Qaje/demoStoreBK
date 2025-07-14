@@ -23,6 +23,11 @@ repositories {
 	mavenCentral()
 }
 
+// Configuración para mostrar deprecaciones
+tasks.withType(JavaCompile) {
+	options.compilerArgs += ["-Xlint:deprecation", "-Xlint:unchecked"]
+}
+
 dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

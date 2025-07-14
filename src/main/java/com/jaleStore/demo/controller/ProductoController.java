@@ -4,6 +4,7 @@ import com.jaleStore.demo.dto.ProductoDTO;
 import com.jaleStore.demo.entity.Producto;
 import com.jaleStore.demo.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,16 @@ public class ProductoController {
     @GetMapping
     public List<Producto> listarProductos() {
         return productoRespository.findAll();
+    }
+
+    @GetMapping("/{idProducto}")
+    public ResponseEntity<Producto> getProductoById(@PathVariable Long idProducto) throws Exception {
+        Optional<Producto> productoOptional = productoRespository.findById(idProducto);
+        if (productoOptional.isPresent()){
+            return new ResponseEntity<>(productoOptional.get(), HttpStatus.OK);
+        }else {
+            throw new Exception("Producto no encontrado");
+        }
     }
 
     @PostMapping

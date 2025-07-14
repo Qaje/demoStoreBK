@@ -54,7 +54,7 @@ public class LoteMapper {
 
         if (detalle.getVariante() != null) {
             dto.setVarianteId(detalle.getVariante().getId());
-            dto.setTalla(detalle.getVariante().getTalla());
+            dto.setTalla(Double.valueOf(detalle.getVariante().getTalla()));
             dto.setColor(detalle.getVariante().getColor());
             dto.setNombreColor(detalle.getVariante().getNombreColor());
             dto.setCodigoColor(detalle.getVariante().getCodigoColor());

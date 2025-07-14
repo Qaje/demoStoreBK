@@ -24,6 +24,8 @@ import java.util.List;
 public class ApplicationConfig {
 
     private final UsuarioRepository usuarioRepository;
+    //private final UserDetailsService userDetailsService;
+
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -70,13 +72,21 @@ public class ApplicationConfig {
         return authorities;
     }
 
+//    @Bean
+//    public AuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(userDetailsService());
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//        return authProvider;
+//    }
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

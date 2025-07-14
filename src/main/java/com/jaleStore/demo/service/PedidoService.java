@@ -11,6 +11,7 @@ import com.jaleStore.demo.util.EstadoPedido;
 import com.jaleStore.demo.util.NivelCliente;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,6 +24,9 @@ import java.util.UUID;
 @Service
 @Transactional
 public class PedidoService {
+
+    @Value("${app.base-url:http://localhost:8080}")
+    private String baseUrl;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -42,6 +46,9 @@ public class PedidoService {
     @Autowired
     private QRService qrService;
 
+    @Autowired
+    private CarritoItemRepository carritoItemRepository;
+
 
     public PedidoDTO crearPedidoDesdeCarrito(Long usuarioId, DatosEntregaDTO datosEntrega) {
         // 1. Validar que el usuario existe
@@ -49,7 +56,7 @@ public class PedidoService {
                 .orElseThrow(() -> new UsuarioNoEncontradoException("Usuario no encontrado con ID: " + usuarioId));
 
         // 2. Obtener items del carrito del usuario
-        List<CarritoItem> itemsCarrito = carritoRepository.findByUsuarioIdAndActivoTrue(usuarioId);
+        List<CarritoItem> itemsCarrito = carritoRepository.findCarritoItemsActivosByUsuarioId(usuarioId);
 
         if (itemsCarrito.isEmpty()) {
             throw new CarritoVacioException("El carrito está vacío para el usuario: " + usuarioId);
@@ -204,14 +211,17 @@ public class PedidoService {
     }
 
     private void limpiarCarritoUsuario(Long usuarioId) {
-        List<CarritoItem> itemsCarrito = carritoRepository.findByUsuarioIdAndActivoTrue(usuarioId);
+        // CAMBIAR ESTA LÍNEA:
+        List<CarritoItem> itemsCarrito = carritoItemRepository.findByUsuarioIdAndActivoTrue(usuarioId);
+        // En lugar de: carritoRepository.findByUsuarioIdAndActivoTrue(usuarioId);
 
         for (CarritoItem item : itemsCarrito) {
             item.setActivo(false);
             item.setFechaEliminacion(LocalDateTime.now());
         }
 
-        carritoRepository.saveAll(itemsCarrito);
+        // USAR EL REPOSITORIO CORRECTO:
+        carritoItemRepository.saveAll(itemsCarrito);
     }
 
     private PedidoDTO convertirPedidoADTO(Pedido pedido) {
